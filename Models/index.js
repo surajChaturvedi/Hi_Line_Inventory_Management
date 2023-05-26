@@ -1,3 +1,4 @@
+const config=require("../Config/Config");
 const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = new Sequelize("inventory", "root", "mysql", {
@@ -19,7 +20,7 @@ try {
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;
 
-  db.users = require("../Models/users")(sequelize, DataTypes);
+  db.users = require("./users")(sequelize, DataTypes);
 
   db.sequelize.sync();
 
