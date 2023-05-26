@@ -1,28 +1,12 @@
-const config=require("../Config/Config");
-const { Sequelize, DataTypes } = require("sequelize");
+const config = require("../Config/Config");
 
-const sequelize = new Sequelize("inventory", "root", "mysql", {
-  host: "localhost",
-  logging: false,
-  dialect: "mysql",
-  // operatorsAliases: false, 
-});
+const db = {};
 
-try {
-    sequelize.authenticate();
-    console.log("Connection has been established successfully.");
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
-  
-  const db = {};
-  
-  db.Sequelize = Sequelize;
-  db.sequelize = sequelize;
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
 
-  db.users = require("./users")(sequelize, DataTypes);
+db.users = require("./users")(sequelize, DataTypes);
 
-  db.sequelize.sync();
+db.sequelize.sync();
 
-  module.exports = db;
-
+module.exports = db;
