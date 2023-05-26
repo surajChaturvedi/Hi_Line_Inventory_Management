@@ -15,7 +15,7 @@ try {
     console.error("Unable to connect to the database:", error);
   }
 
-// module.exports = sequelize
+ module.exports = sequelize
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
