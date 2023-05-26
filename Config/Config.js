@@ -23,6 +23,6 @@ db.sequelize = sequelize;
 db.sequelize.sync();
 
 // db.products = require("../models/product")(sequelize, DataTypes);
-db.users = require("../Models/users.js")(sequelize, DataTypes);
+db.users = require("../Models/users")(sequelize, DataTypes);
 
 module.exports = db;
