@@ -1,11 +1,15 @@
-const Sequelize = require("");
+const { Sequelize, DataTypes } = require("sequelize");
+const sequelize = require("../Config/Config");
+
 const db = {};
+
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+db.admin = require("../Models/admin")(sequelize, DataTypes);
+db.users = require("../Models/users")(sequelize, DataTypes);
+
 db.sequelize.sync();
 
-// db.products = require("../models/product")(sequelize, DataTypes);
-db.users = require("../Models/users.js")(sequelize, DataTypes);
-
 module.exports = db;
+
