@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
 
-const sequelize = new Sequelize("shop", "root", "mysql", {
+const sequelize = new Sequelize("inventory", "root", "mysql", {
   host: "localhost",
   logging: false,
   dialect: "mysql",
@@ -19,7 +19,7 @@ try {
   db.Sequelize = Sequelize;
   db.sequelize = sequelize;
 
-  db.users = require("./users")(sequelize, DataTypes);
+  db.users = require("../Models/users")(sequelize, DataTypes);
 
   db.sequelize.sync();
 
