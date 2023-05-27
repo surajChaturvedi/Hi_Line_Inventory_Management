@@ -6,19 +6,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     middle_name: {
       type: DataTypes.STRING,
-      allowNull: true,
+      // allow null default to true
     },
     last_name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    mobile_number: {
+    mobile_no: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique:true
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
