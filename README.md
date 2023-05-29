@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-#data base name inventory 
-=======
-# 
->>>>>>> d5b7a7e06891a513b28c9926ca5cb29993a7b7d1
+<<<<<<<<< Temporary merge branch 1
+# Hi_Line_Inventory_Management
+=========
+# Hi_Line_Inventory_Management
+>>>>>>>>> Temporary merge branch 2

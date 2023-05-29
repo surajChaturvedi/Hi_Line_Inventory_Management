@@ -1,3 +1,5 @@
+const { Sequelize, DataTypes } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   const users = sequelize.define("users", {
     first_name: {
@@ -12,9 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    mobile_number: {
+    mobile_no: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     email: {
       type: DataTypes.STRING,
@@ -29,5 +32,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+
+  users.associate = (models) => {
+    users.hasMany(models.issued_books, { foreignKey: 'user_id' });
+  };
+
   return users;
 };

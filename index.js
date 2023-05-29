@@ -4,6 +4,14 @@ const app = express();
 const model = require("./Models/index");
 
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv").config();
+
+//requiring connection
+
+
+const router = require("./routes/index")
+
+//const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -14,7 +22,7 @@ const route = require("./Controllers/adminControllers");
 // port name
 const port = 3000;
 
-app.post("/signup", route.signUp);
+app.use('/' ,router);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
