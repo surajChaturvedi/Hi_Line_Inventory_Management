@@ -9,11 +9,15 @@ app.use(bodyParser.json());
 
 //requiring connection
 const con = require("./Config/Config");
-const route = require("./Controllers/userController");
+
+require("dotenv").config();
+
+const router = require("./Routes/userRoutes");
+app.use("/", router);
+
 // port name
 const port = 3000;
-app.post("/login", route.login);
-app.post("/register", route.register);
+
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

@@ -6,7 +6,7 @@ const users = db.users;
 const register = async (req, res) => {
   try {
     //get user input
-    const { first_name, last_name, email, password ,mobile_number} = req.body;
+    const { first_name, last_name, email, password, mobile_number } = req.body;
 
     //validate user input
     if (!first_name || !last_name || !email || !password || !mobile_number) {
@@ -77,8 +77,9 @@ const login = async (req, res) => {
 
       //save token
       user.token = token;
-
+     console.log(user.token);
       //return user
+      //res.send("Login Successful");
       return res.status(200).json(user);
     }
     res.status(400).json({ error: "Invalid Credentials" });
@@ -86,6 +87,5 @@ const login = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
 
 module.exports = { register, login };
