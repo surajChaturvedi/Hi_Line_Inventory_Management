@@ -1,11 +1,10 @@
-const { json } = require("body-parser");
 const model = require("../models");
-const { error } = require("../validation/auth.validation");
 
 class UserServices {
   create(data, queryOptions) {
     return new Promise((resolve, reject) => {
-      model.users.create(data, queryOptions)
+      model.users
+        .create(data, queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
         })
@@ -19,8 +18,9 @@ class UserServices {
   }
 
   findOne(queryOptions) {
-    return new Promises((resolve, reject) => {
-      model.users.findOne(queryOptions)
+    return new Promise((resolve, reject) => {
+      model.users
+        .findOne(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
         })
@@ -32,7 +32,8 @@ class UserServices {
 
   update(data, queryOptions) {
     return new Promise((resolve, reject) => {
-      model.users.update(data, queryOptions)
+      model.users
+        .update(data, queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
         })
@@ -46,8 +47,9 @@ class UserServices {
   }
 
   findAll(queryOptions) {
-    return new Promises((resolve, reject) => {
-      model.users.findAll(queryOptions)
+    return new Promise((resolve, reject) => {
+      model.users
+        .findAll(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
         })
@@ -57,45 +59,47 @@ class UserServices {
     });
   }
 
-  findAndCountAll(queryOptions){
-    return new Promises((resolve, reject)=>{
-        model.users.findAndCountAll(queryOptions)
-        .then((result)=>{
-            result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
+  findAndCountAll(queryOptions) {
+    return new Promise((resolve, reject) => {
+      model.users
+        .findAndCountAll(queryOptions)
+        .then((result) => {
+          result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
         })
         .catch((error) => {
-            reject(error);
+          reject(error);
         });
     });
   }
 
   destroy(queryOptions) {
-    return new Promises((resolve, reject) =>{
-        model.users.destroy(queryOptions)
+    return new Promise((resolve, reject) => {
+      model.users
+        .destroy(queryOptions)
         .then((result) => {
-            result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
+          result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
         })
         .catch((error) => {
-            if(queryOptions && queryOptions.transaction) {
-                queryOptions.transaction.rollback();
-            }
-            reject(error);
+          if (queryOptions && queryOptions.transaction) {
+            queryOptions.transaction.rollback();
+          }
+          reject(error);
         });
     });
   }
 
   count(queryOptions) {
-    return Promise((resolve,reject) => {
-        model.users.count(queryOptions)
+    return Promise((resolve, reject) => {
+      model.users
+        .count(queryOptions)
         .then((result) => {
-            result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
+          result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
         })
-        .catch((error)=>{
-            reject(error);
-        })
-    })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   }
-
 }
 
 module.exports = new UserServices();
