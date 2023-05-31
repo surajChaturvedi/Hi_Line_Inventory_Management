@@ -31,9 +31,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    verified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
   });
 
   users.associate = (models) => {
+    users.hasOne(models.OTP_verifications, { foreignKey: 'user_id' });
     users.hasMany(models.issued_books, { foreignKey: 'user_id' });
   };
 

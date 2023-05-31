@@ -3,7 +3,7 @@ const model = require("../models");
 class IssuedBooksServices {
   create(data, queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issuedbooks
+      model.issued_books
         .create(data, queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -19,7 +19,7 @@ class IssuedBooksServices {
 
   findOne(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issuedbooks
+      model.issued_books
         .findOne(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -32,7 +32,7 @@ class IssuedBooksServices {
 
   update(data, queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issuedbooks
+      model.issued_books
         .update(data, queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -48,7 +48,7 @@ class IssuedBooksServices {
 
   findAll(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issuedbooks
+      model.issued_books
         .findAll(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -61,7 +61,7 @@ class IssuedBooksServices {
 
   findAndCountAll(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issuedbooks
+      model.issued_books
         .findAndCountAll(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -74,7 +74,7 @@ class IssuedBooksServices {
 
   destroy(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issuedbooks
+      model.issued_books
         .destroy(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -90,7 +90,7 @@ class IssuedBooksServices {
 
   count(queryOptions) {
     return Promise((resolve, reject) => {
-      model.issuedbooks
+      model.issued_books
         .count(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);

@@ -27,5 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+
+  admin.associate = (models) => {
+    admin.hasOne(models.OTP_verifications, { foreignKey: 'admin_id' });
+  };
+
   return admin;
 };

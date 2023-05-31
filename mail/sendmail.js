@@ -1,65 +1,75 @@
 const nodemailer = require("nodemailer");
 const { date } = require("joi");
-const { otpVerification } = require("../services/OTPverification.services");
-
+const { otpVerificationServices } = require("../services");
+const { sequelize } = require("../models");
 
 //nodemailer stuff
 
-  // connect with smtp server
-  const transport = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    secure: true,
-    port: 465,
-    auth: {
-      user: "shubhansu.c@copperdigital.com",
-      pass: "Shubhansu@7",
-    },
-  });
-  //};
 
-  // Otp generation
+// Otp generation new table connection
 
-  const sendOTPVerificationEmail = async ({ id, email }, res) => {
-    try {
-      let otp = `${Math.floor(1000 + Math.random() * 9000)}`;
 
-      //Mail Options
-      const mailOptions =({
-        from: "shubhansu.c@copperdigital.com",
-        to: email,
-        subject: "Verify Your Email",
-        html: `<p> Enter <b>${otp}</b> in the app to verify your email address </p> <p> This code <b>express in 1 hour</b>`,
-      });
-      console.log(email);
-      const data = await otpVerification.create({
-        user_id: id,
-        OTP: otp,
-        cretated_at: Date.now(),
-        expires_at: Date.now() + 3600000,
-      });
 
-       transport.sendMail(mailOptions, (err) => {
-        if (err) {
-          console.log("its error", err);
-        } else {
-          res.json({
-            //status: "PENDING",
-            message: "Verification OTP email sent",
-            data: {
+const sendOTPVerificationEmail = async ({ id, email }, res) => {
+  try {
+    let otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+
+    // connect with smtp server
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      host: "smtp.gmail.com",
+      secure: true,
+      port: 465,
+      auth: {
+        user: process.env.MAIL_USERNAME,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
+    //Mail Options
+    const mailOptions = {
+      from: process.env.MAIL_USERNAME,
+      to: email,
+      subject: "Verify Your Email",
+      html: `<p> Enter <b>${otp}</b> in the app to verify your email address </p> <p> This code <b>expires in 1 hour</b>`,
+    };
+    //console.log(email);
+    // const dbTxn = await model.sequelize.transaction();
+
+    const requestBody = {
+      user_id: id,
+      email: email,
+      otp: otp,
+      expires_at: Date.now() + 3600000,
+    };
+
+    // queryOptions = {
+    //   transaction: dbTxn,
+    // };
+
+    const data = await otpVerificationServices.create(requestBody);
+    
+    transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.log("its error", err);
+      } else {
+        res.json(
+          //status: "PENDING",
+          {
               userID: id,
               email: email,
-            },
-          });
-        }
-      });
-      comsole.log(`message sent ${data.messageId}`);
-    } catch (error) {
-      res.json({
-        status: "FAILED",
-        message: error.message,
-      });
-    }
-  };
+              message: "Verification OTP email sent",
+          },
+        );
+      }
+    });
+    console.log(`message sent ${data.messageId}`);
+  } catch (error) {
+    res.json({
+      status: "FAILED",
+      message: error.message,
+    });
+  }
+};
 
-module.exports =  sendOTPVerificationEmail  ;
+module.exports = sendOTPVerificationEmail;

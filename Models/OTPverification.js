@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const OTPVerificationSchema = sequelize.define(
+    const OTPVerification = sequelize.define(
       "OTP_verifications",
       {
           user_id: {
@@ -10,8 +10,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: true,
           },
-          OTP: {
+          otp: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+          },
+          email :{
+            type: DataTypes.STRING,
             allowNull: false,
           }
       },
@@ -22,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
       }
     );
   
-    OTPVerificationSchema.associate = (models) => {
-        OTPVerificationSchema.belongsTo(models.users, { foreignKey: 'user_id' });
-        OTPVerificationSchema.belongsTo(models.admin, { foreignKey: 'admin_id' });
+    OTPVerification.associate = (models) => {
+      OTPVerification.belongsTo(models.users, { foreignKey: 'user_id' });
+      OTPVerification.belongsTo(models.admin, { foreignKey: 'admin_id' });
     };
   
-    return OTPVerificationSchema;
+    return OTPVerification;
   };
    

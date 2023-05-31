@@ -5,8 +5,9 @@ const sendOTPVerificationEmail = require("../mail/sendmail");
 
 // Jsonwebtoken
 const jwt = require("jsonwebtoken");
-const { userService } = require("../services");
+const { userService, otpVerificationServices } = require("../services");
 const { sequelize } = require("../models");
+const OTPverificationServices = require("../services/OTPverification.services");
 
 const register = async (req, res) => {
   let queryOptions, requestBody;
@@ -47,9 +48,62 @@ const register = async (req, res) => {
       await dbTxn.commit();
       var id = createUser.id;
       var email = requestBody.email;
-      sendOTPVerificationEmail( {id, email},res);
-      return res.send("user added");
+      return sendOTPVerificationEmail({ id, email }, res);
+      //return res.send("user added");
     }
+  }
+};
+
+// Verify to email
+const verifyOtp = async (req, res) => {
+  try {
+    const { user_id, otp } = req.body;
+    if (!user_id || !otp) {
+      throw Error("Empty otp details arenot allowed");
+    } else {
+      queryOptions = {
+        where: {
+          user_id: user_id,
+        },
+      };
+      let otpCheck = await OTPverificationServices.findOne(queryOptions);
+
+      if (!otpCheck) {
+        res.json({
+          message:
+            "Account record doesn't exist or has been verified already.Please sign up and log in",
+        });
+      } else {
+        const expiresAt = otpCheck.expires_at;
+        const otpDb = otpCheck.otp;
+
+        if (expiresAt < Date.now()) {
+          //otp is expired
+          await otpVerificationServices.destroy(user_id);
+          throw Error("Code has been expired. Please request again");
+        } else {
+          if (otp != otpDb) {
+            //supplied worng otp
+            throw new Error(
+              "Invalid otp please check email and enter correct otp"
+            );
+          } else {
+            //success
+            userService.update (({ verified: true }), ({where:{id :user_id}}));
+            otpVerificationServices.destroy({where:{user_id :user_id}});
+            res.json({
+              status: "VERIFIED",
+              message: "User has been verified.",
+            });
+          }
+        }
+      }
+    }
+  } catch (error) {
+    res.json({
+      status: "FAILED",
+      message: error.message,
+    });
   }
 };
 
@@ -113,4 +167,4 @@ const login = (req, res) => {
   return checkLogin();
 };
 
-module.exports = { register, login };
+module.exports = { register, login, verifyOtp };
