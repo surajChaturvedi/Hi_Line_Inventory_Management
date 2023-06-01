@@ -74,8 +74,7 @@ const login = async (req, res) => {
           expiresIn: "1h",
         }
       );
-
-      //save token
+      //save token 
       user.token = token;
      console.log(user.token);
       //return user
