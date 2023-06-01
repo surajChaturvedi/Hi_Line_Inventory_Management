@@ -76,7 +76,7 @@ const login = async (req, res) => {
       );
       //save token 
       user.token = token;
-     console.log(user.token);
+      console.log(user.token);
       //return user
       //res.send("Login Successful");
       return res.status(200).json(user);
@@ -87,4 +87,46 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const bookSearch = async (req, res) => {
+  try {
+    //get user input
+    const { book_id } = req.body;
+    //validate user input
+    if (!book_id) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+    //search book
+    const book = await db.books.findOne({ where: { id: book_id } });
+    return res.status(200).json(book);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+const issueBook = async (req, res) => {
+  try {
+    //get user input
+    const { book_id, user_id } = req.body;
+    //validate user input
+    if (!book_id || !user_id) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+    //search book and user
+    const book = await db.books.findOne({ where: { id: book_id } });
+    const user = await db.users.findOne({ where: { id: user_id } });
+    if (!book || !user) {
+      return res.status(400).json({ error: "Invalid Credentials" });
+    }
+    //issue book
+    const issued_books = await db.issued_books.create({
+      book_id,
+      user_id,
+      issued_on: new Date(),
+    });
+    return res.status(201).json(issued_books);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = { register, login, bookSearch, issueBook };

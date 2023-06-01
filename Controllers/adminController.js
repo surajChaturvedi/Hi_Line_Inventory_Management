@@ -3,38 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const admin = db.admin;
 
-// admin authentication file
-require('./auth.js') ;
-
-require("dotenv").config();
-// route handling google authentication
-app.get('/auth/google',
-  passport.authenticate('google', { scope:
-      [ 'email', 'profile' ] }
-));
-
-
-function isLoggedIn(req, res, next) {
-  req.user ? next() : res.sendStatus(401);
-   }
- 
- app.get( '/auth/google/callback',
-     passport.authenticate( 'google', {
-         successRedirect: '/auth/protected',
-         failureRedirect: '/auth/failure'
- }));
- 
- // for login
- app.get('/auth/protected',isLoggedIn ,(req, res) => {
-   let name = req.user.displayName;
-   res.send("success logged in");  
- })
- 
- //for failure
- app.get('/auth/failure', (req, res) => {
-   res.send("failure logged in");
- })
-
 const register = async (req, res) => {
   try {
     //get admin input
