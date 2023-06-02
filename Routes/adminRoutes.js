@@ -6,5 +6,6 @@ router.post("/admin/register", adminController.register);
 router.post("/admin/login", adminController.login);
 router.post("/admin/addbook", adminController.addBook);
 router.get("/admin/booksearch", adminController.bookSearch);
+router.get("/admin/issuedbooks", adminController.issuedbooks);
 
 module.exports = router;

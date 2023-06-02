@@ -99,4 +99,13 @@ const bookSearch = async (req, res) => {
   }
 };
 
-module.exports = { register, login, addBook, bookSearch };
+const issuedbooks=async(req,res)=>{
+  try{
+    const issued_books=await db.issued_books.findAll({where:{user_id:req.params.id}});
+    return res.status(200).json(issued_books);
+  }catch(err){
+    return res.status(500).json({error:err.message});
+  }
+}
+
+module.exports = { register, login, addBook, bookSearch, issuedbooks };

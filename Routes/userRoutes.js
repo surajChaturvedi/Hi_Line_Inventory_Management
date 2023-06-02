@@ -7,7 +7,6 @@ router.post("/user/register", userController.register);
 router.post("/user/login",userController.login);
 router.get("/user/booksearch", userController.bookSearch);
 router.post("/user/issuebook", userController.issueBook);
-router.get("/user/issuedbooks", userController.issuedbooks);
 
 // router.post("/admin/login", adminController.login);
 
