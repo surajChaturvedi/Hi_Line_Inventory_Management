@@ -83,9 +83,9 @@ const bookSearch = async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
     //search book
-    const book = await db.books.findOne({ where: { id: book_id } });
-    
-    
+     const book = await db.books.findOne({ where: { id: book_id } });
+    // console.log(book.title);
+
     return res.status(200).json(book);
   } catch (err) {
     return res.status(500).json({ error: err.message });
