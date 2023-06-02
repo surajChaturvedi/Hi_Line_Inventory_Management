@@ -84,6 +84,8 @@ const bookSearch = async (req, res) => {
     }
     //search book
     const book = await db.books.findOne({ where: { id: book_id } });
+    
+    
     return res.status(200).json(book);
   } catch (err) {
     return res.status(500).json({ error: err.message });

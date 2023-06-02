@@ -12,8 +12,8 @@ const con = require("./Config/Config");
 
 require("dotenv").config();
 
-const router = require("./Routes/userRoutes");
-app.use("/", router);
+const router = require("./Routes/index");
+app.use("/", router); 
 
 // port name
 const port = 3000;

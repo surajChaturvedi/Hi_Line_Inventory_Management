@@ -3,7 +3,6 @@ const sequelize = require("../Config/Config");
 
 const db = {};
 
-
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
@@ -13,6 +12,6 @@ db.admin = require("../Models/admin")(sequelize, DataTypes);
 db.users = require("../Models/users")(sequelize, DataTypes);
 db.issued_books = require("../Models/issued_books")(sequelize, DataTypes);
 
-db.sequelize.sync();
+//db.sequelize.sync({force:true});
 
 module.exports = db;
