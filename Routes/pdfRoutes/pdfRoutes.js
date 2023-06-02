@@ -25,7 +25,7 @@ const bookSearch = async (req, res) => {
           }
           //search book
             books = await db.books.findOne({ where: { id: book_id } });
-           console.log(books.title);               
+        //    console.log(books.title);               
           ejs.renderFile(path.join(__dirname, '../../Views', "report-template.ejs"), {books:books }, (err, data) => {
                 if (err) {
                       res.send(err);

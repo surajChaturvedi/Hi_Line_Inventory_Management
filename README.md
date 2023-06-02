@@ -7,3 +7,8 @@
 to use google api 
 
 1. npm install passport-google-oauth20
+2. to run pdf
+
+$ npm install ejs
+
+$ npm install html-pdf
