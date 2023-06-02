@@ -19,6 +19,7 @@ const register = async (req, res) => {
         .status(409)
         .json({ error: "admin already exists.please login" });
     }
+    
     //hash password
     encryptedPassword = await bcrypt.hash(password, 10);
     //create admin
@@ -66,16 +67,6 @@ const login = async (req, res) => {
     return res.status(200).json("logged in successfully");
   }
 };
-//create token
-// const token = jwt.sign({ adminId: admin.id }, process.env.TOKEN_KEY, {
-//   expiresIn: "1h",
-// });
-// //save token
-// return res.status(200).json({ admin, token });
-//   } catch (err) {
-//     return res.status(500).json({ error:"its admin login" });
-//   }
-// };
 
 const addBook = async (req, res) => {
   const newBook = req.body;
