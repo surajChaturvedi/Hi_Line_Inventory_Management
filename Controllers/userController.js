@@ -2,6 +2,7 @@ const db = require("../Models/index");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const users = db.users;
+const sendOTPVerificationEmail = require("../Mail/sendMail");
 
 const register = async (req, res) => {
   try {
@@ -33,6 +34,7 @@ const register = async (req, res) => {
       password: encryptedPassword,
       mobile_number,
     });
+    sendOTPVerificationEmail(user.id, email);
 
     //create token
     const token = jwt.sign(
@@ -130,4 +132,13 @@ const issueBook = async (req, res) => {
   }
 };
 
-module.exports = { register, login, bookSearch, issueBook };
+const issuedbooks=async(req,res)=>{
+  try{
+    const issued_books=await db.issued_books.findAll({where:{user_id:req.params.id}});
+    return res.status(200).json(issued_books);
+  }catch(err){
+    return res.status(500).json({error:err.message});
+  }
+}
+
+module.exports = { register, login, bookSearch, issueBook ,issuedbooks};
