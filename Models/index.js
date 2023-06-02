@@ -36,9 +36,9 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-sequelize.sync({force:true}).then(() => { 
-    console.log('TABLES SYNC SUCCESSFUL');
-});
+// sequelize.sync({force:true}).then(() => { 
+//     console.log('TABLES SYNC SUCCESSFUL');
+// });
 
 
 db.Sequelize = Sequelize;

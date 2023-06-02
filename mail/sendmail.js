@@ -6,10 +6,6 @@ const { sequelize } = require("../models");
 //nodemailer stuff
 
 
-// Otp generation new table connection
-
-
-
 const sendOTPVerificationEmail = async ({ id, email }, res) => {
   try {
     let otp = `${Math.floor(1000 + Math.random() * 9000)}`;
@@ -34,7 +30,7 @@ const sendOTPVerificationEmail = async ({ id, email }, res) => {
       html: `<p> Enter <b>${otp}</b> in the app to verify your email address </p> <p> This code <b>expires in 1 hour</b>`,
     };
     //console.log(email);
-    // const dbTxn = await model.sequelize.transaction();
+    //const dbTxn = await model.sequelize.transaction();
 
     const requestBody = {
       user_id: id,
