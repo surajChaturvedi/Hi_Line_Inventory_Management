@@ -13,15 +13,15 @@ const admin = db.admin;
 const adminController = require("../../Controllers/adminController");
 
 const bookSearch = async (req, res) => {
-        try {
-          //get admin input
-          const { book_id } = req.body;
-          //validate admin input
-          if (!book_id) {
-            return res.status(400).json({ error: "All fields are required" });
-          }
+        // try {
+        //   //get admin input
+        //   const { book_id } = req.body;
+        //   //validate admin input
+        //   if (!book_id) {
+        //     return res.status(400).json({ error: "All fields are required" });
+        //   }
           //search book
-            books = await db.books.findOne({ where: { id: book_id } });
+            books = await db.books.findAll();
            //console.log(books.title);               
           ejs.renderFile(path.join(__dirname, '../../Views', "report-template.ejs"), {books:books }, (err, data) => {
                 if (err) {
@@ -45,13 +45,9 @@ const bookSearch = async (req, res) => {
                                }
                     }) }})
                 //     return res.status(200).json(books);
-        } catch (err) {
-          return res.status(500).json({ error: err.message });
-        }
+        } 
         
-      };
+      
 
       router.get("/generateReport", bookSearch);
-
-
         module.exports = router,{bookSearch};
