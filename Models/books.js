@@ -21,5 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  books.associate = (models) => {
+    books.belongsTo(models.admin, {
+      foreignKey: "admin_id",
+    });
+  }
   return books;
 };

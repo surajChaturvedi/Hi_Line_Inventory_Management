@@ -29,5 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  users.associate = (models) => {
+    users.hasMany(models.issued_books, {
+      foreignKey: "user_id",
+      //onDelete: "CASCADE",
+    });
+    }
   return users;
 };

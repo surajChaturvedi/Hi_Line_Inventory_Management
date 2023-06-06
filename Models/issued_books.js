@@ -24,5 +24,12 @@ module.exports = (sequelize, DataTypes) => {
     {
         timestamps: false
     })
+    issued_books.associate = (models) => {
+        issued_books.belongsTo(models.books, {
+            foreignKey: "book_id",
+          //  onDelete: "CASCADE",
+
+        })
+    }
     return issued_books;
 };

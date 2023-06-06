@@ -14,6 +14,6 @@ db.users = require("../Models/users")(sequelize, DataTypes);
 db.issued_books = require("../Models/issued_books")(sequelize, DataTypes);
 db.OTP_verification = require("../Models/OTPverification")(sequelize, DataTypes);
 
-db.sequelize.sync({force:true});
+// db.sequelize.sync({force:true});
 
 module.exports = db;

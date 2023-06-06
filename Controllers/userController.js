@@ -132,6 +132,4 @@ const issueBook = async (req, res) => {
   }
 };
 
-
-
 module.exports = { register, login, bookSearch, issueBook };

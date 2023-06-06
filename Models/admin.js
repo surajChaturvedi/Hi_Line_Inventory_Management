@@ -25,5 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+  admin.associate = (models) => {
+    admin.hasMany(models.books, {
+      foreignKey: "admin_id",
+      //onDelete: "CASCADE",
+    })
+  }
+
   return admin;
 };
