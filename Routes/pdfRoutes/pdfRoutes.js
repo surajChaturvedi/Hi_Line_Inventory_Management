@@ -12,11 +12,11 @@ const db = require("../../Models/index");
 const admin = db.admin;
 const adminController = require("../../Controllers/adminController");
 
-const bookSearch = async (req, res) => {
+const bookadded = async (req, res) => {
         // try {
         //   //get admin input
         //   const { book_id } = req.body;
-        //   //validate admin input
+        //   //validate admin inp`ut
         //   if (!book_id) {
         //     return res.status(400).json({ error: "All fields are required" });
         //   }
@@ -49,5 +49,5 @@ const bookSearch = async (req, res) => {
         
       
 
-      router.get("/generateReport", bookSearch);
-        module.exports = router,{bookSearch};
+      router.get("/generateReport", bookadded);
+        module.exports = router,{bookadded};

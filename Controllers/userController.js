@@ -46,6 +46,7 @@ const register = async (req, res) => {
     );
     //save token
     user.token = token;
+    console.log(user.token);
 
     //return new user
     return res.status(201).json(user);
