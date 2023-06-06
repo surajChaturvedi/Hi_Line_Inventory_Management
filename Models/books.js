@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+  },
+  {
+    timestamps : false,
   });
   books.associate = (models) => {
     books.belongsTo(models.admin, {
