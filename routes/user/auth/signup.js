@@ -12,8 +12,6 @@ router.post("/verify", verifyOtp);
 
 router.post("/resendOTPverification");
 
-router.post("/login" , login);
-
 router.get("/generateReport", userPdf);
 
 

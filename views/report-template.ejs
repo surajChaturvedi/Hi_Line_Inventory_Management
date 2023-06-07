@@ -12,20 +12,20 @@
     </head> 
     <body>
         <div style="width: 85%; margin: 0 7.5%;">
-            <div style="text-align: center; padding-left: 50px;">            
+            <div style="text-align: center; padding-left: 10px;">            
                 <h3>User details </h5>
                 <table>
-                        <th>User ID</th>
-                        <th>Name</th>
-                        <th>Issued Books</th>
-                        <th>Department</th>
-                        <th>Issued On</th>
+                        <th style=" padding: 10px;">User ID</th>
+                        <th style=" padding: 10px;">Name</th>
+                        <th style=" padding: 10px;">Issued Books</th>
+                        <th style=" padding: 10px;">Department</th>
+                        <th style=" padding: 10px;">Issued On</th>
                     <% for(var i =0;i < count;i++) {%>
-                        <tr><th><%= userId%></th>
-                        <th><%= userName%></th>
-                        <th><%= bookName[i].book_title%></th>
-                        <th><%= bookName[i].department%></th>
-                        <th><%= rows[i].issued_on%></th></tr>
+                        <tr style=" padding: 10px;"><th><%= userId%></th>
+                        <th style=" padding: 10px;"><%= userName%></th>
+                        <th style=" padding: 10px;"><%= bookName[i].book_title%></th>
+                        <th style=" padding: 10px;"><%= bookName[i].department%></th>
+                        <th style=" padding: 10px;"><%= rows[i].issued_on%></th></tr>
                         <% }%>
                 </table>
              </div>

@@ -109,34 +109,42 @@ const verifyOtp = async (req, res) => {
 
 // Login Part
 
-const login = (req, res) => {
-  const { error, email } = req.body;
-  if (error) {
-    // return res.send("Invalid Request: " + JSON.stringify(error));
-    return res.send(`Invalid Request: ${JSON.stringify(error)}`);
-  }
-  async function checkLogin() {
-    const check = await User.findOne({
+const login = async (req, res) => {
+  // if (error) {
+  //   // return res.send("Invalid Request: " + JSON.stringify(error));
+  //   return res.send(`Invalid Request: ${JSON.stringify(error)}`);
+  // }
+    const userDetail = await userService.findOne({
       where: {
         //[Op.and]:  by default it will take AND condition for OR we will take [Op.OR]
-        email: email,
+        email: req.body.email,
       },
     });
-    if (check) {
+    if (userDetail) {
       let password = req.body.password;
-      let passwordMatched = await findHash(password, check.password);
+      let passwordMatched = await findHash(password, userDetail.password);
       //console.log(passwordMatched);
-      if (passwordMatched) {
-        res.send(`${check.first_name} logged in`);
 
+      if(userDetail.verified== false)
+      {
+        var id = userDetail.id;
+        var email = req.body.email;
+        return sendOTPVerificationEmail({ id, email }, res);
+        // res.json({
+        //   message : "OTP has been sent please verify your email ID and then try to login again"
+        // })
+      }
+
+      else if (passwordMatched) {
+        res.send(`${userDetail.first_name} logged in`);
         // JWT part
         let token;
         try {
           //Creating jwt token
           token = jwt.sign(
             {
-              //email: check.email,
-              userId: user.id,
+              //email: userDetail.email,
+              userId: userDetail.id,
               //, email: existingUser.email
             },
             "secretKey",
@@ -152,7 +160,7 @@ const login = (req, res) => {
           success: true,
           data: {
             //userName:req.body.userName,
-            userId: user.id,
+            userId: userDetail.id,
             //email: existingUser.email,
             token: token,
           },
@@ -164,7 +172,5 @@ const login = (req, res) => {
       res.json({ message: "User not found" });
     }
   }
-  return checkLogin();
-};
 
 module.exports = { register, login, verifyOtp };
