@@ -2,7 +2,7 @@ const { issuedBooksService, booksService } = require("../services");
 const userServices = require("../services/user.services");
 const { sequelize } = require("../models");
 
-
+// Add book function
 const addBooks = async (req, res) => {
   const { book_title, department, quantity } = req.body;
   const requestBody = {
@@ -12,6 +12,7 @@ const addBooks = async (req, res) => {
   };
 
   const dbTxn = await sequelize.transaction();
+  
   queryOptions = {
     transaction: dbTxn,
   };
@@ -32,7 +33,7 @@ const addBooks = async (req, res) => {
 const userdetails = async (req, res) => {
   const queryOptions = {
     where: {
-      user_id: id,
+      user_id: id
     },
   };
 
@@ -48,4 +49,4 @@ const userdetails = async (req, res) => {
   }
 };
 
-module.exports = { userdetails , addBooks};
+module.exports = { userdetails, addBooks };

@@ -158,7 +158,7 @@ const login = (req, res) => {
           },
         });
       } else {
-        res.json({ message: "Invalid username/password" });
+        res.json({ message: "Invalid credentials" });
       }
     } else {
       res.json({ message: "User not found" });

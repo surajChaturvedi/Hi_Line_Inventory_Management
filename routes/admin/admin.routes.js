@@ -5,7 +5,6 @@ const {
   addBooks,
 } = require("../../controllers/admin.userdetails");
 
-
 router.post("/addbook", addBooks);
 
 router.post("/userdetails/:id", userdetails);
