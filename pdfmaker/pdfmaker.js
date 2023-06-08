@@ -8,13 +8,13 @@ let ejs = require("ejs");
 app.set("view engine", "ejs");
 let pdf = require("html-pdf");
 let path = require("path");
-require("../models");
 const {
   userService,
   issuedBooksService,
   booksService,
 } = require("../services");
 const { log } = require("console");
+const model = require('../models/index');
 
 const userPdf = async (req, res) => {
   const user_id = req.body.user_id;
@@ -23,47 +23,63 @@ const userPdf = async (req, res) => {
       message: "Empty otp details is not allowed.",
     });
   } else {
+
     queryOptions = {
       where: {
         id: user_id,
       },
+      include: [
+        { 
+          model: model.issued_books,
+          include: [
+            { 
+              model: model.books,
+              attributes: ['book_title' , 'department']
+            }
+          ]
+        }
+      ]
     };
     let userDetails = await userService.findOne(queryOptions);
     let userName = userDetails.first_name + " " + userDetails.last_name;
 
+    // console.log(userName)
+    // console.log(userDetails.issued_books[0].issued_on);
+    // console.log(userDetails.issued_books[0].book.book_title);
+    // console.log(userDetails.issued_books.length);
+
     // To check how many books user issued
 
-    queryOptions2 = {
-      where: {
-        user_id: user_id,
-      },
-    };
-    let { rows, count } = await issuedBooksService.findAndCountAll(
-      queryOptions2
-    );
-    // console.log(rows[0].issued_on);
-    let findBookId = [];
-    for (let i = 0; i < count; i++) {
-      findBookId.push(rows[i].book_id);
-    }
-    // console.log("Arr: ", findBookId);
+                                                //  taking each service to find value 
+    // queryOptions2 = {
+    //   where: {
+    //     user_id: user_id,
+    //   },
+    // };
+    // let { rows, count } = await issuedBooksService.findAndCountAll(
+    //   queryOptions2
+    // );
+    // // console.log(rows[0].issued_on);
+    // let findBookId = [];
+    // for (let i = 0; i < count; i++) {
+    //   findBookId.push(rows[i].book_id);
+    // }
+    // // console.log("Arr: ", findBookId);
 
-    queryOptions3 = {
-      //include: [{model: Tag, as: 'tags'}],
-      //   where: { id: { in: findBookId } },
-      where: { id: findBookId },
-    };
-    let bookName = await booksService.findAll(queryOptions3);
+    // queryOptions3 = {
+    //   //include: [{model: Tag, as: 'tags'}],
+    //   //   where: { id: { in: findBookId } },
+    //   where: { id: findBookId },
+    // };
+    // let bookName = await booksService.findAll(queryOptions3);
     // console.log(bookName[0].book_title);
 
     ejs.renderFile(
       path.join(__dirname, "../views", "report-template.ejs"),
       {
-        count: count,
         userId: user_id,
-        bookName: bookName,
+        userDetails: userDetails,
         userName: userName,
-        rows: rows,
       },
 
       (err, data) => {

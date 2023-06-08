@@ -20,12 +20,12 @@
                         <th style=" padding: 10px;">Issued Books</th>
                         <th style=" padding: 10px;">Department</th>
                         <th style=" padding: 10px;">Issued On</th>
-                    <% for(var i =0;i < count;i++) {%>
+                    <% for(let i =0;i < userDetails.issued_books.length;i++) {%>
                         <tr style=" padding: 10px;"><th><%= userId%></th>
                         <th style=" padding: 10px;"><%= userName%></th>
-                        <th style=" padding: 10px;"><%= bookName[i].book_title%></th>
-                        <th style=" padding: 10px;"><%= bookName[i].department%></th>
-                        <th style=" padding: 10px;"><%= rows[i].issued_on%></th></tr>
+                        <th style=" padding: 10px;"><%= userDetails.issued_books[i].book.book_title%></th>
+                        <th style=" padding: 10px;"><%= userDetails.issued_books[i].book.department%></th>
+                        <th style=" padding: 10px;"><%= userDetails.issued_books[i].issued_on%></th></tr>
                         <% }%>
                 </table>
              </div>

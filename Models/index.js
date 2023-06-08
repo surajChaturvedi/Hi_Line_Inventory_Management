@@ -8,7 +8,7 @@ const db = {};
 const sequelize = new Sequelize("inventory", "root", "12345", {
   host: "localhost",
   dialect: "mysql",
-  logging: false,
+  logging: console.log,
 });
 
 try {
