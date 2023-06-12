@@ -1,9 +1,9 @@
 const model = require("../models");
 
-class IssuedBooksServices {
+class OTPVerificationServices {
   create(data, queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issued_books
+      model.OTP_verifications
         .create(data, queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -19,7 +19,7 @@ class IssuedBooksServices {
 
   findOne(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issued_books
+      model.OTP_verifications
         .findOne(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -32,7 +32,7 @@ class IssuedBooksServices {
 
   update(data, queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issued_books
+      model.OTP_verifications
         .update(data, queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -48,7 +48,7 @@ class IssuedBooksServices {
 
   findAll(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issued_books
+      model.OTP_verifications
         .findAll(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -61,7 +61,7 @@ class IssuedBooksServices {
 
   findAndCountAll(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issued_books
+      model.OTP_verifications
         .findAndCountAll(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -74,7 +74,7 @@ class IssuedBooksServices {
 
   destroy(queryOptions) {
     return new Promise((resolve, reject) => {
-      model.issued_books
+      model.OTP_verifications
         .destroy(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -90,7 +90,7 @@ class IssuedBooksServices {
 
   count(queryOptions) {
     return Promise((resolve, reject) => {
-      model.issued_books
+      model.OTP_verifications
         .count(queryOptions)
         .then((result) => {
           result ? resolve(JSON.parse(JSON.stringify(result))) : resolve(false);
@@ -102,4 +102,4 @@ class IssuedBooksServices {
   }
 }
 
-module.exports = new IssuedBooksServices();
+module.exports = new OTPVerificationServices();

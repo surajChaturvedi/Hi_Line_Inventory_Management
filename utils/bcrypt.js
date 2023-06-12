@@ -4,9 +4,7 @@ const saltRounds = 10;
 
 const genrateHash = async (myPlaintextPassword) => {
   const hashedPassword = await bcrypt.hash(myPlaintextPassword, saltRounds);
-
-  console.log('This is bcrypt js console log: ' + hashedPassword);
-
+  //console.log('This is bcrypt js console log: ' + hashedPassword);
   return hashedPassword;
 };
 
