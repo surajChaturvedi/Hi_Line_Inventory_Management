@@ -20,13 +20,15 @@
                         <th style=" padding: 10px;">Issued Books</th>
                         <th style=" padding: 10px;">Department</th>
                         <th style=" padding: 10px;">Issued On</th>
-                    <% for(let i =0;i < userDetails.issued_books.length;i++) {%>
-                        <tr style=" padding: 10px;"><th><%= userId%></th>
-                        <th style=" padding: 10px;"><%= userName%></th>
-                        <th style=" padding: 10px;"><%= userDetails.issued_books[i].book.book_title%></th>
-                        <th style=" padding: 10px;"><%= userDetails.issued_books[i].book.department%></th>
-                        <th style=" padding: 10px;"><%= userDetails.issued_books[i].issued_on%></th></tr>
-                        <% }%>
+                    <% for(let i =0;i < userDetails.length;i++) {%>
+                      <% for(let j =0;j < userDetails[i].issued_books.length;j++) {%>
+                        <tr style=" padding: 10px;"><th><%= userDetails[i].id%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].first_name + " " + userDetails[i].last_name;%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].issued_books[j].book.book_title%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].issued_books[j].book.department%></th>
+                        <th style=" padding: 10px;"><%= newDate %></th></tr>
+                      <% }%>
+                    <% }%>
                 </table>
              </div>
         </div>

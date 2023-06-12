@@ -15,18 +15,22 @@ const {
 } = require("../services");
 const { log } = require("console");
 const model = require('../models/index');
+const {Op} = require('sequelize');
 
 const userPdf = async (req, res) => {
   const user_id = req.body.user_id;
+  console.log(user_id)
+  // for (let i = 0; i < user_id.length; i++) {
+  //   }
   if (!user_id) {
     res.json({
-      message: "Empty otp details is not allowed.",
+      message: "Empty details is not allowed.",
     });
   } else {
 
     queryOptions = {
       where: {
-        id: user_id,
+        id : user_id,
       },
       include: [
         { 
@@ -34,16 +38,23 @@ const userPdf = async (req, res) => {
           include: [
             { 
               model: model.books,
-              attributes: ['book_title' , 'department']
+              // attributes: ['book_title' , 'department'],
             }
           ]
         }
       ]
     };
-    let userDetails = await userService.findOne(queryOptions);
-    let userName = userDetails.first_name + " " + userDetails.last_name;
-
-    // console.log(userName)
+    let userDetails = await userService.findAll(queryOptions);
+    console.log(userDetails[0].issued_books[0].book_id)
+    let userName = userDetails[0].first_name + " " + userDetails[0].last_name;
+    // let checkDate ;
+     for(let i =0; i < userDetails.length;i++) {
+        for(let j =0;j < userDetails[i].issued_books.length;j++){
+          let checkDate = userDetails[i].issued_books[j].issued_on;
+        }
+      }
+    let newDate = checkDate.getDate();
+    console.log(newDate);
     // console.log(userDetails.issued_books[0].issued_on);
     // console.log(userDetails.issued_books[0].book.book_title);
     // console.log(userDetails.issued_books.length);
@@ -77,9 +88,8 @@ const userPdf = async (req, res) => {
     ejs.renderFile(
       path.join(__dirname, "../views", "report-template.ejs"),
       {
-        userId: user_id,
         userDetails: userDetails,
-        userName: userName,
+        newDate : newDate,
       },
 
       (err, data) => {
