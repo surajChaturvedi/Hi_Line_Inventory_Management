@@ -122,16 +122,14 @@ const issueBook = async (req, res) => {
     }
     //issue book
     const issued_books = await db.issued_books.create({
-      book_id,
-      user_id,
-      issued_on: new Date(),
-    });
-    return res.status(201).json(issued_books);
+      bookId:book_id,
+      userId:user_id,
+      issued_on: Date(Date.now())
+    }); 
+    return res.status(201).json("Books has been issued");
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
 };
-
-
 
 module.exports = { register, login, bookSearch, issueBook };

@@ -1,28 +1,19 @@
+
 module.exports = (sequelize, DataTypes) => {
-    const issued_books = sequelize.define("issued_books", {
-        book_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "books",
-                key: "id",
+    const issued_books = sequelize.define("issued_books", 
+        {
+            
+            issued_on: {
+              type: DataTypes.STRING,
+              allowNull: false,
             },
         },
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "users",
-                key: "id",
-            },
-        },
-        issued_on: {
-            type: DataTypes.DATE,
-            allowNull: false
-        }
-    },
+
     {
-        timestamps: false
+        timestamps : false
+        // timestamps: true,
+        // createdAt : 'issued_on',
+        // updatedAt: false
     })
     return issued_books;
 };

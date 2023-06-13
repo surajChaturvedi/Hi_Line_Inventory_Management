@@ -25,13 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       updatedAt: "expires_at",
     }
   );
-  OTPverification.associate = (models) => {
-    OTPverification.belongsTo(models.users, {
-      foreignKey: "user_id",
-    });
-    OTPverification.belongsTo(models.admin, {
-      foreignKey: "admin_id",
-    });
-  };
+ 
   return OTPverification;
 };
