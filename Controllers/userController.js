@@ -67,6 +67,18 @@ const login = async (req, res) => {
     //validate if user exists
     const user = await users.findOne({ where: { email } });
 
+    // sendOTPVerificationEmail(user.id, email);
+
+    if(user.verified== false)
+      {
+        var id = user.id;
+        //var email = req.body.email;
+        return sendOTPVerificationEmail( id, email );
+        res.json({
+          message : "OTP has been sent please verify your email ID and then try to login again"
+        })
+      }
+
     if (user && (await bcrypt.compare(password, user.password))) {
       //create token
       const token = jwt.sign(
@@ -76,18 +88,77 @@ const login = async (req, res) => {
           expiresIn: "1h",
         }
       );
-      //save token 
+      //save token
       user.token = token;
       console.log(user.token);
       //return user
       //res.send("Login Successful");
-      return res.status(200).json(user);
+      return res.status(200).json("user logged in");
     }
     res.status(400).json({ error: "Invalid Credentials" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
+const verifyOTP = async (req, res) => {
+  try {
+    //get user input
+    const { user_id, otp } = req.body;
+    //validate user input
+    if (!user_id || !otp) {
+      return res.status(400).json({ error: "empty fields" });
+    }
+    const otpCheck = await db.OTP_verification.findOne({ where: { user_id } });
+    if (!otpCheck) {
+      return res.status(400).json({
+        error:
+          "account record doesn't exist or has been verified. Please SignUp and Login again",
+      });
+    } else {
+      const expiresAt = otpCheck.expires_at;
+      const otpDb = otpCheck.otp;
+
+      if (expiresAt > Date.now()) {
+        await db.OTP_verification.destroy({ where: { user_id: otpCheck.id } });
+        return res.status(400).json({ error: "otp expired" });
+      } else {
+        if (otp != otpDb) {
+          return res.status(400).json({ error: "otp doesn't match" });
+        } else {
+          otpCheck.verified = true;
+          await db.OTP_verification.destroy({
+            where: { user_id: otpCheck.id },
+          });
+          await otpCheck.save();
+          users.update (({ verified: true }), ({where:{id :user_id}}));
+          db.OTP_verification.destroy({where:{user_id :user_id}});
+          return res.status(200).json({
+            status: "otp verified",
+            message: "user has been verified",
+          });
+        }
+      }
+    }
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+};
+
+// if (.verified) {
+//   return res.status(400).json({ error: "account already verified" });
+// }
+// if (user.otp != otp) {
+//   return res.status(400).json({ error: "otp doesn't match" });
+// }
+// user.verified = true;
+// user.otp = null;
+// await user.save();
+// return res.status(200).json(user);
+//   } catch (err) {
+//     return res.status(500).json({ error: err.message });
+//   }
+// };
 
 const bookSearch = async (req, res) => {
   try {
@@ -131,4 +202,4 @@ const issueBook = async (req, res) => {
   }
 };
 
-module.exports = { register, login, bookSearch, issueBook };
+module.exports = { register, login, bookSearch, issueBook, verifyOTP };

@@ -26,10 +26,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
   admin.associate = (models) => {
-    admin.hasMany(models.books, {
+    admin.hasOne(models.OTP_verification, {
       foreignKey: "admin_id",
-      //onDelete: "CASCADE",
-    })
+    });
   }
 
   return admin;

@@ -28,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         issued_books.belongsTo(models.books, {
             foreignKey: "book_id",
           //  onDelete: "CASCADE",
-
+        });
+        issued_books.belongsTo(models.users, {
+            foreignKey: "user_id",
+            
         })
     }
     return issued_books;

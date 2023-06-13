@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     timestamps : false,
   });
   books.associate = (models) => {
-    books.belongsTo(models.admin, {
-      foreignKey: "admin_id",
+    books.hasMany(models.issued_books, {
+      foreignKey: "book_id",
     });
   }
   return books;
