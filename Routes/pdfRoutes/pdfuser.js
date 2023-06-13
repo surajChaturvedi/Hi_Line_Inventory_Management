@@ -45,7 +45,6 @@ const userInfo = async (req, res) => {
       console.log(console.log(userDetails[0].issued_books[1].book.title)
       )
 
-
     // let checkDate ;
     // let checkDate;
     //  for(let i =0; i < userDetails.length;i++) {

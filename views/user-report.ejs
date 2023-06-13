@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+        table {
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        </style>
+    </head> 
+    <body>
+        <div style="width: 85%; margin: 0 7.5%;">
+            <div style="text-align: center; padding-left: 10px;">            
+                <h3>User details </h5>
+                <table>
+                        <th style=" padding: 10px;">User ID</th>
+                        <th style=" padding: 10px;">Name</th>
+                        <th style=" padding: 10px;">Issued Books Name</th>
+                        <th style=" padding: 10px;">Author</th>
+                        <th style=" padding: 10px;">Category</th>
+                        <th style=" padding: 10px;">Issued On</th>
+                    <% for(let i =0;i < userDetails.length;i++) {%>
+                      <% for(let j =0;j < userDetails[i].issued_books.length;j++) {%>
+                        <tr style=" padding: 10px;"><th><%= userDetails[i].id%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].first_name + " " + userDetails[i].last_name;%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].issued_books[j].book.title%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].issued_books[j].book.author%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].issued_books[j].book.category%></th>
+                        <th style=" padding: 10px;"><%= userDetails[i].issued_books[j].issued_on%></th>
+                       
+                      <% }%>
+                    <% }%>
+                </table>
+             </div>
+        </div>
