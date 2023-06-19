@@ -109,7 +109,7 @@ const bookSearch = async (req, res) => {
 const issueBook = async (req, res) => {
   try {
     //get user input
-    const { book_id, user_id } = req.body;
+    const { book_id, user_id ,issued_on,return_date} = req.body;
     //validate user input
     if (!book_id || !user_id) {
       return res.status(400).json({ error: "All fields are required" });
@@ -117,15 +117,37 @@ const issueBook = async (req, res) => {
     //search book and user
     const book = await db.books.findOne({ where: { id: book_id } });
     const user = await db.users.findOne({ where: { id: user_id } });
+   console.log(book.return_date);
+
     if (!book || !user) {
       return res.status(400).json({ error: "Invalid Credentials" });
     }
-    //issue book
+  
     const issued_books = await db.issued_books.create({
-      bookId:book_id,
-      userId:user_id,
-      issued_on: Date(Date.now())
-    }); 
+      book_id:book_id,
+      user_id:user_id,
+      issued_on: issued_on,
+      return_date: return_date,
+    });
+
+    // const time = await db.issued_books.findOne({ where: { id: book_id } });
+    // console.log(time.issued_on); 
+
+   
+
+
+    //  let date = new Date(time.issued_on); 
+    // let date2 = new Date(time.return_date);
+    // let date3 = new Date("2021-10-14"); 
+    // let date4 = new Date("2021-12-20");
+    // let diff = Math.abs(date2 - date);
+    // let diff = Math.abs(new Date(time.issued_on) - new Date(time.return_date));
+    // console.log(diff);
+    // let diff2 = Math.abs(date - date4);
+    // console.log(diff2);
+    // var milliseconds = date.getTime();
+    // console.log(milliseconds); 
+     
     return res.status(201).json("Books has been issued");
   } catch (err) {
     return res.status(500).json({ error: err.message });

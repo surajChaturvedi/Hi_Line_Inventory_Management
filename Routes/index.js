@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userAuthRoute = require('./user/userRoutes');
 const adminAuthRoute = require('./admin/adminRoutes');
-const pdfRoute = require('./pdfRoutes/pdfRoutes');
-const pdfUser = require('./pdfRoutes/pdfuser');
+const pdfRoute = require('../pdfConverter/pdfRoutes');
+const pdfUser = require('../pdfConverter/pdfuser');
+const pdfFine = require('../pdfConverter/pdfFine');
 
 const defaultRoutes = [
     {
@@ -46,6 +47,16 @@ pdfRoutes.forEach((route) => {
 }]
 
 pdfRouteUser.forEach((route) => {
+    router.use(route.path,
+        route.route)
+})
+
+const pdfFines =[{
+    path: '/pdfFine',
+    route: pdfFine
+}]
+
+pdfFines.forEach((route) => {
     router.use(route.path,
         route.route)
 })

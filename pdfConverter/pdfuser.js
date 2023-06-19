@@ -8,9 +8,9 @@ app.use(bodyParser.json());
 let ejs = require("ejs");
 let pdf = require("html-pdf");
 let path = require("path");
-const db = require("../../Models/index");
-const admin = db.admin;
-const adminController = require("../../Controllers/adminController");
+const model = require('../Models/index');
+
+const adminController = require("../Controllers/adminController");
 // const users = require("../../Models/users");
 const { Op } = require("sequelize");
 
@@ -29,10 +29,10 @@ const userInfo = async (req, res) => {
         },
         include: [
           { 
-            model: db.issued_books,
+            model: model.issued_books,
             include: [
               { 
-                model: db.books,
+                model: model.books,
                 // attributes: ['book_title' , 'department'],
               }
             ]
@@ -41,8 +41,8 @@ const userInfo = async (req, res) => {
       };
 
      // let userDetails = await users.findAll(queryOptions);
-      let userDetails = await db.users.findAll(queryOptions);
-      console.log(console.log(userDetails[0].issued_books[1].book.title)
+      let userDetails = await model.users.findAll(queryOptions);
+      console.log(console.log(userDetails[0].issued_books[0].book.title)
       )
 
     // let checkDate ;
@@ -55,7 +55,7 @@ const userInfo = async (req, res) => {
     // let newDate = checkDate.getDate();
 
   ejs.renderFile(
-    path.join(__dirname, "../../Views", "user-report.ejs"),
+    path.join(__dirname, "../Views", "user-report.ejs"),
           {
         userDetails: userDetails
          },

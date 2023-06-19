@@ -29,5 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
+
+  //associate  
+   users.associate = (models) => {
+  //   users.hasOne(models.OTP_verifications, { foreignKey: 'user_id' });
+    users.hasMany(models.issued_books, { foreignKey: 'user_id' });
+  };
+
   return users;
 };

@@ -23,7 +23,25 @@ module.exports = (sequelize, DataTypes) => {
     return_date: {
       type: DataTypes.DATE,
       allowNull: false,
-    },
+    }
+  },
+  {
+      timestamps: false,
+      // If don't want createdAt
+      createdAt: false,
+      // If don't want updatedAt
+      updatedAt: false,
+  
   });
+  book_borrower.associate = (models) => {
+    book_borrower.belongsTo(models.books, {
+        foreignKey: "book_id",
+      //  onDelete: "CASCADE",
+    });
+    book_borrower.belongsTo(models.users, {
+        foreignKey: "user_id",
+    })
+
+}
   return book_borrower;
 };

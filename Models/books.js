@@ -24,5 +24,20 @@ module.exports = (sequelize, DataTypes) => {
   {
     timestamps : false,
   });
+
+  // for stablising assocation with table books table to issued table
+  books.associate = (models) => {
+    books.hasMany(models.issued_books, {
+      foreignKey: "book_id",
+    });
+
+    // Assocition for the books to the book_borrower
+    books.associate = (models) => {
+      books.hasMany(models.book_borrower, {
+        foreignKey: "book_id",
+      });
+    }
+  }
+// for stablising assocation with table books table to borrower table
   return books;
 };

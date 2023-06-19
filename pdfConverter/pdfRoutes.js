@@ -8,9 +8,9 @@ app.use(bodyParser.json());
 let ejs = require("ejs");
 let pdf = require("html-pdf");
 let path = require("path");
-const db = require("../../Models/index");
+const db = require("../Models/index");
 const admin = db.admin;
-const adminController = require("../../Controllers/adminController");
+const adminController = require("../Controllers/adminController");
 
 const bookadded = async (req, res) => {
   // try {
@@ -24,7 +24,7 @@ const bookadded = async (req, res) => {
   books = await db.books.findAll();
   //console.log(books.title);
   ejs.renderFile(
-    path.join(__dirname, "../../Views", "report-template.ejs"),
+    path.join(__dirname, "../views", "report-template.ejs"),
     { books: books },
     (err, data) => {
       if (err) {
@@ -46,7 +46,7 @@ const bookadded = async (req, res) => {
             if (err) {
               res.send(err);
             } else {
-              res.send("File created successfully");
+              res.send(" Pdf File created successfully ");
             }
           });
       }
