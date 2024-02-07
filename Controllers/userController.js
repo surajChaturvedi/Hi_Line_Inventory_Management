@@ -34,6 +34,7 @@ const register = async (req, res) => {
       password: encryptedPassword,
       mobile_number,
     });
+    
     sendOTPVerificationEmail(user.id, email);
 
     //create token

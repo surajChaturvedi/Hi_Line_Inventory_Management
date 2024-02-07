@@ -1,0 +1,25 @@
+{
+  "name": "hi_line_inventory_management",
+  "version": "1.0.0",
+  "description": "<<<<<<< HEAD\r #data base name inventory \r =======\r # \r >>>>>>> d5b7a7e06891a513b28c9926ca5cb29993a7b7d1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "html-pdf": "^3.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.9.1",
+    "nodemailer": "^6.9.9",
+    "sequelize": "^6.36.0",
+    "smtp-server": "^3.13.2"
+  }
+}
